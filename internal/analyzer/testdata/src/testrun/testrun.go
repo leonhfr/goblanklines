@@ -1,0 +1,50 @@
+package testrun
+
+import (
+	"fmt"
+	"testing"
+)
+
+func singleRunNotIsolated(t *testing.T) {
+	fmt.Println("setup")
+	t.Run("case", func(t *testing.T) {}) // want "missing newline before t.Run calls" "missing newline after t.Run calls"
+	fmt.Println("done")
+}
+
+func singleRunIsolated(t *testing.T) {
+	fmt.Println("setup")
+
+	t.Run("case", func(t *testing.T) {})
+
+	fmt.Println("done")
+}
+
+func groupedRunsNotIsolated(t *testing.T) {
+	fmt.Println("setup")
+	t.Run("case1", func(t *testing.T) {}) // want "missing newline before t.Run calls"
+	t.Run("case2", func(t *testing.T) {}) // want "missing newline after t.Run calls"
+	fmt.Println("done")
+}
+
+func groupedRunsIsolated(t *testing.T) {
+	fmt.Println("setup")
+
+	t.Run("case1", func(t *testing.T) {})
+	t.Run("case2", func(t *testing.T) {})
+
+	fmt.Println("done")
+}
+
+func runFirstInBlockNoBeforeNeeded(t *testing.T) {
+	if true {
+		t.Run("case", func(t *testing.T) {})
+
+		fmt.Println("inner")
+	}
+}
+
+func runLastInBlockNoAfterNeeded(t *testing.T) {
+	fmt.Println("setup")
+
+	t.Run("case", func(t *testing.T) {})
+}

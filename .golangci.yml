@@ -1,0 +1,76 @@
+version: "2"
+
+linters:
+  default: standard
+  enable:
+    - commentlen
+    - errcheck
+    - errorlint
+    - exhaustive
+    - forcetypeassert
+    - funcorder
+    - goblanklines
+    - gocritic
+    - gocyclo
+    - godot
+    - godox
+    - gosec
+    - govet
+    - ineffassign
+    - misspell
+    - modernize
+    - nilerr
+    - nilnesserr
+    - nilnil
+    - noctx
+    - paralleltest
+    - perfsprint
+    - predeclared
+    - revive
+    - staticcheck
+    - thelper
+    - tparallel
+    - unconvert
+    - unparam
+    - unused
+    - usetesting
+    - whitespace
+  settings:
+    custom:
+      commentlen:
+        type: module
+        description: size and shape limits for Go comments
+        settings:
+          preset: strict
+      goblanklines:
+        type: module
+        description: Inserts blank lines according to a set of rules.
+        original-url: github.com/leonhfr/goblanklines
+        settings:
+          rules: []
+    funcorder:
+      function: true
+    gocyclo:
+      min-complexity: 12
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - gosec
+
+formatters:
+  enable:
+    - gci
+    - gofumpt
+    - golines
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - localmodule
+    golines:
+      max-len: 300
+  exclusions:
+    paths:
+      - internal/analyzer/testdata

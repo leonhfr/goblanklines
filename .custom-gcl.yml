@@ -1,0 +1,8 @@
+version: v2.14.0
+name: goblanklines-golangci-lint
+destination: bin
+plugins:
+  - module: github.com/leonhfr/goblanklines
+    path: .
+  - module: github.com/swchck/commentlen
+    version: v0.2.0

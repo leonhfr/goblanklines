@@ -1,0 +1,72 @@
+package testhelper
+
+import (
+	"fmt"
+	"testing"
+)
+
+func helperThenCodeNoBlank(t *testing.T) {
+	t.Helper() // want "missing newline after test helper calls"
+
+	fmt.Println("body")
+}
+
+func helperThenCodeWithBlank(t *testing.T) {
+	t.Helper()
+
+	fmt.Println("body")
+}
+
+func parallelThenCodeNoBlank(t *testing.T) {
+	t.Parallel() // want "missing newline after test helper calls"
+
+	fmt.Println("body")
+}
+
+func helperAndParallelGroupedNoBlank(t *testing.T) {
+	t.Helper()
+	t.Parallel() // want "missing newline after test helper calls"
+
+	fmt.Println("body")
+}
+
+func parallelAndHelperGroupedWithBlank(t *testing.T) {
+	t.Parallel()
+	t.Helper()
+
+	fmt.Println("body")
+}
+
+func helperAtEndOfFunc(t *testing.T) {
+	fmt.Println("setup")
+	t.Helper()
+}
+
+func helperAtEndOfBlock(t *testing.T) {
+	if true {
+		t.Helper()
+	}
+
+	fmt.Println("body")
+}
+
+func otherMethodCallNotFlagged(t *testing.T) {
+	t.Log("not a helper call")
+	fmt.Println("body")
+}
+
+func customReceiverNameTypedTB(tb testing.TB) {
+	tb.Helper() // want "missing newline after test helper calls"
+
+	fmt.Println("body")
+}
+
+func nonTestingReceiverNotFlagged() {
+	s := stub{}
+	s.Helper()
+	fmt.Println("body")
+}
+
+type stub struct{}
+
+func (stub) Helper() {}
